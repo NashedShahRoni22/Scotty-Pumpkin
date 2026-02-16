@@ -5,7 +5,7 @@ export default function Footer() {
   const footerLinks = [
     { label: 'About Scotty Pumpkin', href: '#about' },
     { label: 'Marketplace', href: '#marketplace' },
-    { label: 'Creator a Shop', href: '#create-shop' },
+    { label: 'Create a Shop', href: '#create-shop' },
     { label: 'Terms & Privacy', href: '#terms' }
   ];
 

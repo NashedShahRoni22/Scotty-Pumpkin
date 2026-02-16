@@ -1,3 +1,4 @@
+import Ecosystem from "./components/home/Ecosystem";
 import Features from "./components/home/Features";
 import Hero from "./components/home/Hero";
 import Payments from "./components/home/Payments";
@@ -12,6 +13,8 @@ export default function Page() {
       <Features />
       {/* Workflow Cards Section */}
       <WorkflowCards />
+      {/* Ecosystem Section */}
+      <Ecosystem/>
       {/* Payments Section */}
       <Payments />
       {/* Bottom Spacing */}
