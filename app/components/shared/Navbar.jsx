@@ -9,8 +9,9 @@ export default function Navbar() {
 
   // Navigation menu items array
   const menuItems = [
-    { label: 'Marketplace', href: '#marketplace' },
-    { label: 'Create a Shop', href: '#create' },
+    { label: 'Buy', href: '/buy' },
+    { label: 'Market', href: '#marketplace' },
+    { label: 'Create', href: '#create' },
     { label: 'Blog', href: '#blog' },
   ];
 
