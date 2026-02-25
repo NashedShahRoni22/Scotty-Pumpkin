@@ -4,8 +4,10 @@ import { useState } from "react";
 import heroImg from "@/public/assets/hero.png";
 import Image from "next/image";
 import Step1 from "@/public/assets/buy/Step-1.png";
-import Step2 from "@/public/assets/buy/Step-1.png";
-import Step3 from "@/public/assets/buy/Step-1.png";
+import Step2 from "@/public/assets/buy/Step-2.png";
+import Step3 from "@/public/assets/buy/Step-3.png";
+import centralized from "@/public/assets/buy/centralized.png";
+import dex from "@/public/assets/buy/dex.png";
 
 const WALLET_ADDRESS = "8HVXp9...9peL6s";
 const WALLET_FULL = "8HVXp9ABCDEFGHIJKLMNOPQRSTUVWXYZabcd9peL6s";
@@ -69,7 +71,6 @@ export default function page() {
           100% { background-position: 200% center; }
         }
 
-        /* ── Glassmorphic — only How to Get section ── */
         .sp-step-card {
           background: rgba(255, 255, 255, 0.04);
           backdrop-filter: blur(20px);
@@ -91,6 +92,32 @@ export default function page() {
           box-shadow: 0 8px 40px rgba(0,0,0,0.4), 0 0 60px rgba(99,102,241,0.12), inset 0 1px 0 rgba(255,255,255,0.07);
         }
 
+        /* ── CEX & DEX cards ── */
+        .sp-cex-card {
+          background: rgba(255, 255, 255, 0.04);
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          border: 1px solid rgba(245,158,11,0.2);
+          box-shadow: 0 8px 32px rgba(0,0,0,0.3), 0 0 40px rgba(245,158,11,0.06), inset 0 1px 0 rgba(255,255,255,0.05);
+          transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+        .sp-cex-card:hover {
+          border-color: rgba(245,158,11,0.4);
+          box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 50px rgba(245,158,11,0.12);
+        }
+        .sp-dex-card {
+          background: rgba(255, 255, 255, 0.04);
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          border: 1px solid rgba(168,85,247,0.2);
+          box-shadow: 0 8px 32px rgba(0,0,0,0.3), 0 0 40px rgba(168,85,247,0.06), inset 0 1px 0 rgba(255,255,255,0.05);
+          transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+        .sp-dex-card:hover {
+          border-color: rgba(168,85,247,0.4);
+          box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 50px rgba(168,85,247,0.12);
+        }
+
         /* ── Buttons ── */
         .sp-gradient-btn {
           background: linear-gradient(135deg, #15803d, #166534);
@@ -101,6 +128,18 @@ export default function page() {
           background: linear-gradient(135deg, #16a34a, #15803d);
           transform: scale(1.04);
           box-shadow: 0 6px 30px rgba(21,128,61,0.6);
+        }
+        .sp-dex-btn {
+          background: rgba(168,85,247,0.15);
+          border: 1px solid rgba(168,85,247,0.4);
+          transition: all 0.25s ease;
+          box-shadow: 0 4px 20px rgba(168,85,247,0.2);
+        }
+        .sp-dex-btn:hover {
+          background: rgba(168,85,247,0.28);
+          border-color: rgba(168,85,247,0.7);
+          transform: scale(1.04);
+          box-shadow: 0 6px 30px rgba(168,85,247,0.35);
         }
         .sp-outline-btn {
           border: 2px solid rgba(168,85,247,0.6);
@@ -155,7 +194,7 @@ export default function page() {
       <section className="relative z-10 px-4 py-12 md:py-16 lg:py-24 lg:px-16">
         <div className="max-w-5xl mx-auto space-y-12 md:space-y-16">
 
-          {/* ── Hero Banner — no glass ── */}
+          {/* ── Hero Banner ── */}
           <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
             <div className="flex justify-center order-1 md:order-1">
               <div
@@ -192,7 +231,7 @@ export default function page() {
             </div>
           </div>
 
-          {/* ── What is Scotty — no glass ── */}
+          {/* ── What is Scotty ── */}
           <div className="space-y-4 px-1">
             <p className="text-white/85 text-base md:text-lg leading-relaxed">
               Scotty (SPUMP) is a utility payment{" "}
@@ -217,7 +256,7 @@ export default function page() {
 
           <div className="sp-divider" />
 
-          {/* ── How to get Scotty — GLASSMORPHIC ── */}
+          {/* ── How to get Scotty ── */}
           <div className="space-y-6">
             <h2 className="text-2xl md:text-3xl font-bold text-white">
               How to get Scotty (SPUMP)
@@ -225,13 +264,11 @@ export default function page() {
 
             <div className="grid lg:grid-cols-5 gap-5">
 
-              {/* Steps — left 3/5 — rendered from STEPS array */}
+              {/* Steps */}
               <div className="lg:col-span-3 space-y-4">
                 {STEPS.map((step) => (
                   <div key={step.number} className="sp-step-card rounded-2xl p-6 md:p-7">
                     <div className="flex items-center gap-5">
-
-                      {/* Number badge */}
                       <div className="flex-shrink-0 self-start mt-1">
                         <div className="sp-step-number w-12 h-12 rounded-xl flex items-center justify-center">
                           <span className="text-amber-400 font-black text-lg">
@@ -239,8 +276,6 @@ export default function page() {
                           </span>
                         </div>
                       </div>
-
-                      {/* Text */}
                       <div className="flex-1 min-w-0">
                         <h3 className="font-bold text-amber-400 text-lg mb-3">
                           {step.title}
@@ -259,8 +294,6 @@ export default function page() {
                           </p>
                         )}
                       </div>
-
-                      {/* Step image — size-48 */}
                       <div className="hidden sm:block flex-shrink-0 size-48 relative">
                         <Image
                           src={step.image}
@@ -269,13 +302,12 @@ export default function page() {
                           className="object-contain drop-shadow-lg"
                         />
                       </div>
-
                     </div>
                   </div>
                 ))}
               </div>
 
-              {/* Wallet card — right 2/5 */}
+              {/* Wallet card */}
               <div className="lg:col-span-2">
                 <div className="sp-wallet-card rounded-2xl p-6 md:p-7 h-full flex flex-col justify-between gap-6">
                   <div className="space-y-4">
@@ -284,9 +316,7 @@ export default function page() {
                       <br />
                       Platform Wallet
                     </h3>
-
                     <div className="sp-divider" />
-
                     <div className="space-y-2">
                       <p className="text-white/55 text-sm">
                         Public Solana Wallet Address:
@@ -303,7 +333,6 @@ export default function page() {
                         </button>
                       </div>
                     </div>
-
                     <div className="bg-white/[0.03] border border-white/[0.06] rounded-xl px-4 py-3">
                       <p className="text-white/50 text-xs mb-1">Purpose:</p>
                       <p className="text-white/80 text-sm font-medium">
@@ -311,7 +340,6 @@ export default function page() {
                       </p>
                     </div>
                   </div>
-
                   <button
                     onClick={handleCopy}
                     className="sp-copy-btn w-full py-3.5 rounded-xl font-bold text-base text-white transition-all hover:scale-[1.02] active:scale-[0.98]"
@@ -321,6 +349,101 @@ export default function page() {
                 </div>
               </div>
 
+            </div>
+          </div>
+
+          <div className="sp-divider" />
+
+          {/* ── CEX Card ── */}
+          <div className="space-y-5">
+            <div className="sp-cex-card rounded-2xl p-6 md:p-8">
+              <div className="flex items-start gap-6">
+                <div className="flex-1 min-w-0 space-y-4">
+                  <div className="flex items-center gap-3 flex-wrap">
+                    <span className="text-2xl">🏛️</span>
+                    <h2 className="text-xl md:text-2xl font-bold text-amber-400">
+                      Buy on Centralized Exchange{" "}
+                      <span className="text-white/55 font-normal text-base">(Recommended)</span>
+                    </h2>
+                  </div>
+                  <p className="text-white/75 text-sm md:text-base">
+                    We list Scotty (SPUMP) on <span className="font-bold text-white">approved</span> centralized
+                    exchanges to ensure:
+                  </p>
+                  <div className="space-y-2">
+                    {[
+                      "Better liquidity",
+                      "Regulated onboarding (KYC where required)",
+                      "Safer user experience",
+                      "Simplified buying process",
+                    ].map((item) => (
+                      <p key={item} className="flex items-center gap-2 text-white/80 text-sm md:text-base">
+                        <span className="sp-check">✓</span>
+                        {item}
+                      </p>
+                    ))}
+                  </div>
+                  <button className="sp-gradient-btn px-8 py-3.5 rounded-xl font-bold text-base text-white mt-2">
+                    Visit Official Exchange
+                  </button>
+                </div>
+                
+                {/* Swap this div with your actual CEX image */}
+                <div
+                  className="hidden sm:flex size-48 items-center justify-center rounded-2xl"
+                  style={{ background: "rgba(245,158,11,0.07)", border: "1px solid rgba(245,158,11,0.15)" }}
+                >
+                  <Image
+                    src={centralized}
+                    alt="centralized exchange"
+                    className="object-contain"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* ── DEX Card ── */}
+            <div className="sp-dex-card rounded-2xl p-6 md:p-8">
+              <div className="flex items-start gap-6">
+                <div className="flex-1 min-w-0 space-y-4">
+                  <div className="flex items-center gap-3 flex-wrap">
+                    <span className="text-2xl">🔄</span>
+                    <h2 className="text-xl md:text-2xl font-bold text-white">
+                      DEX Listing{" "}
+                      <span className="text-purple-300 font-normal text-base">(Price Reference & Limited Liquidity)</span>
+                    </h2>
+                  </div>
+                  <p className="text-white/75 text-sm md:text-base">
+                    Scotty (SPUMP) may also be available on Solana DEX platforms.
+                  </p>
+                  <div className="space-y-2">
+                    {[
+                      "Liquidity is intentionally limited",
+                      "Used mainly for price discovery",
+                      "Not the preferred method for large purchases",
+                    ].map((item) => (
+                      <p key={item} className="flex items-center gap-2 text-white/80 text-sm md:text-base">
+                        <span className="sp-check">✓</span>
+                        {item}
+                      </p>
+                    ))}
+                  </div>
+                  <button className="sp-dex-btn px-8 py-3.5 rounded-xl font-bold text-base text-white mt-2">
+                    View DEX Listing
+                  </button>
+                </div>
+                {/* Swap this div with your actual DEX image */}
+                <div
+                  className="hidden sm:flex size-48 items-center justify-center rounded-2xl"
+                  style={{ background: "rgba(168,85,247,0.07)", border: "1px solid rgba(168,85,247,0.15)" }}
+                >
+                  <Image
+                    src={dex}
+                    alt="DEX"
+                    className="object-contain"
+                  />
+                </div>
+              </div>
             </div>
           </div>
 

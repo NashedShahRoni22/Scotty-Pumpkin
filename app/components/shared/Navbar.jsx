@@ -10,9 +10,10 @@ export default function Navbar() {
   // Navigation menu items array
   const menuItems = [
     { label: 'Buy', href: '/buy' },
-    { label: 'Market', href: '#marketplace' },
-    { label: 'Create', href: '#create' },
-    { label: 'Blog', href: '#blog' },
+    { label: 'Ecosystem', href: '/ecosystem' },
+    { label: 'Market', href: '/marketplace' },
+    { label: 'Create', href: '/create' },
+    { label: 'Blog', href: '/blog' },
   ];
 
   // Prevent body scroll when mobile menu is open
