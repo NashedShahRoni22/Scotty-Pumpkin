@@ -1,4 +1,3 @@
-import React from 'react';
 import { Wallet, ShoppingBag, TrendingUp } from 'lucide-react';
 
 export default function Payments() {

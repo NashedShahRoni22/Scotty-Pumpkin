@@ -11,9 +11,9 @@ export default function Navbar() {
   const menuItems = [
     { label: 'Buy', href: '/buy' },
     { label: 'Ecosystem', href: '/ecosystem' },
-    { label: 'Market', href: '/marketplace' },
-    { label: 'Create', href: '/create' },
-    { label: 'Blog', href: '/blog' },
+    { label: 'Market', href: 'https://bfinit.com/bfinit-ecomerce-platform' },
+    { label: 'Create', href: 'https://sosay.org/' },
+    // { label: 'Blog', href: '/blog' },
   ];
 
   // Prevent body scroll when mobile menu is open

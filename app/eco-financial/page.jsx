@@ -1,0 +1,398 @@
+"use client";
+
+import { useState } from "react";
+
+const ALLOCATION = [
+  { label: "Ecosystem sustainability investments", value: "60%", pct: 60, color: "rgba(245,158,11,0.9)", glow: "rgba(245,158,11,0.25)" },
+  { label: "Operational reserves",                value: "10%", pct: 10, color: "rgba(168,85,247,0.9)", glow: "rgba(168,85,247,0.2)" },
+  { label: "Liquidity support",                   value: "10%", pct: 10, color: "rgba(99,102,241,0.9)",  glow: "rgba(99,102,241,0.2)"  },
+  { label: "Operating expenses",                  value: "10%", pct: 10, color: "rgba(59,130,246,0.9)",  glow: "rgba(59,130,246,0.2)"  },
+  { label: "Social & community welfare",          value: "10%", pct: 10, color: "rgba(74,222,128,0.9)",  glow: "rgba(74,222,128,0.2)"  },
+];
+
+const NO_RIGHTS = [
+  "Do not create ownership rights",
+  "Do not create profit rights",
+  "Do not create dividend rights",
+  "Do not create financial claims",
+  "Do not represent a hedge, reserve backing, or guarantee of token value",
+];
+
+const MARKET_CARDS = [
+  {
+    id: "dex",
+    icon: "🔄",
+    label: "DEX",
+    title: "Decentralized Exchange",
+    accent: "rgba(168,85,247,0.8)",
+    border: "rgba(168,85,247,0.3)",
+    glow: "rgba(168,85,247,0.12)",
+    bg: "rgba(168,85,247,0.07)",
+    body: "SPUMP liquidity is paired with USDC or SOL in accordance with the SPL Solana liquidity model.",
+    note: "Standard market-making structure — does not constitute a value guarantee or hedge.",
+    tags: ["USDC Pair", "SOL Pair", "SPL Standard"],
+  },
+  {
+    id: "cex",
+    icon: "🏛️",
+    label: "CEX",
+    title: "Centralized Exchange",
+    accent: "rgba(245,158,11,0.8)",
+    border: "rgba(245,158,11,0.3)",
+    glow: "rgba(245,158,11,0.12)",
+    bg: "rgba(245,158,11,0.07)",
+    body: "SPUMP trades freely based on open market supply and demand dynamics.",
+    note: "No guarantee of value, appreciation, stability, or financial return is provided.",
+    tags: ["Open Market", "Supply & Demand", "Free Float"],
+  },
+];
+
+export default function EcoFinancialPage() {
+  const [barsAnimated, setBarsAnimated] = useState(false);
+
+  return (
+    <>
+      <style>{`
+        @keyframes sp-float {
+          0%, 100% { transform: translateY(0px); }
+          50%       { transform: translateY(-10px); }
+        }
+        @keyframes sp-shimmer {
+          0%   { background-position: -200% center; }
+          100% { background-position: 200% center; }
+        }
+        @keyframes sp-fade-in {
+          from { opacity: 0; transform: translateY(10px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes sp-glow-pulse {
+          0%, 100% { opacity: 0.4; }
+          50%       { opacity: 1; }
+        }
+        @keyframes sp-bar-grow {
+          from { width: 0%; }
+          to   { width: var(--bar-w); }
+        }
+        @keyframes sp-scale-in {
+          from { transform: scale(0.95); opacity: 0; }
+          to   { transform: scale(1); opacity: 1; }
+        }
+
+        .sp-shimmer-heading {
+          background: linear-gradient(90deg,
+            rgba(255,255,255,0.7) 0%,
+            rgba(255,255,255,1) 30%,
+            rgba(255,255,255,0.7) 60%,
+            rgba(255,255,255,1) 90%
+          );
+          background-size: 200% auto;
+          -webkit-background-clip: text;
+          background-clip: text;
+          -webkit-text-fill-color: transparent;
+          animation: sp-shimmer 5s linear infinite;
+        }
+        .sp-divider {
+          height: 1px;
+          background: linear-gradient(to right, transparent, rgba(255,255,255,0.1) 20%, rgba(168,85,247,0.3) 50%, rgba(255,255,255,0.1) 80%, transparent);
+        }
+
+        /* Hero */
+        .sp-hero-card {
+          background: rgba(99,102,241,0.08);
+          backdrop-filter: blur(24px);
+          -webkit-backdrop-filter: blur(24px);
+          border: 1px solid rgba(99,102,241,0.25);
+          box-shadow: 0 8px 40px rgba(0,0,0,0.4), 0 0 60px rgba(99,102,241,0.12), inset 0 1px 0 rgba(255,255,255,0.07);
+        }
+
+        /* Disclaimer banner */
+        .sp-disclaimer {
+          background: rgba(239,68,68,0.06);
+          border: 1px solid rgba(239,68,68,0.2);
+          backdrop-filter: blur(16px);
+        }
+
+        /* Allocation section */
+        .sp-alloc-card {
+          background: rgba(255,255,255,0.03);
+          backdrop-filter: blur(20px);
+          border: 1px solid rgba(255,255,255,0.08);
+          box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+
+        /* Donut/ring visual */
+        .sp-ring-wrap {
+          position: relative;
+          width: 160px;
+          height: 160px;
+          flex-shrink: 0;
+        }
+        .sp-ring-center {
+          position: absolute;
+          inset: 0;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+        }
+
+        /* Bar track */
+        .sp-bar-track { background: rgba(255,255,255,0.06); border-radius: 999px; overflow: hidden; height: 8px; }
+        .sp-bar-fill  { height: 100%; border-radius: 999px; animation: sp-bar-grow 1s ease forwards; }
+
+        /* No-rights list */
+        .sp-no-rights-card {
+          background: rgba(239,68,68,0.05);
+          border: 1px solid rgba(239,68,68,0.18);
+          backdrop-filter: blur(16px);
+        }
+        .sp-no-rights-item {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          padding: 10px 14px;
+          background: rgba(239,68,68,0.04);
+          border: 1px solid rgba(239,68,68,0.12);
+          border-radius: 10px;
+        }
+
+        /* Market cards */
+        .sp-market-card {
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          border-radius: 20px;
+          padding: 28px;
+          transition: transform 0.3s ease, box-shadow 0.3s ease;
+          animation: sp-scale-in 0.35s ease forwards;
+        }
+        .sp-market-card:hover {
+          transform: translateY(-4px);
+        }
+        .sp-tag {
+          border-radius: 999px;
+          padding: 3px 10px;
+          font-size: 0.7rem;
+          font-weight: 700;
+        }
+
+        /* Final notice */
+        .sp-notice {
+          background: rgba(255,255,255,0.02);
+          border: 1px solid rgba(255,255,255,0.06);
+        }
+
+        /* Badges */
+        .sp-badge-amber  { background: rgba(245,158,11,0.15); border: 1px solid rgba(245,158,11,0.3);  color: #fbbf24; }
+        .sp-badge-indigo { background: rgba(99,102,241,0.15); border: 1px solid rgba(99,102,241,0.3);  color: #a5b4fc; }
+        .sp-badge-red    { background: rgba(239,68,68,0.12);  border: 1px solid rgba(239,68,68,0.25);  color: #f87171; }
+        .sp-badge-green  { background: rgba(74,222,128,0.10); border: 1px solid rgba(74,222,128,0.25); color: #4ade80; }
+      `}</style>
+
+      <section className="relative z-10 px-4 py-12 md:py-16 lg:py-24 lg:px-16">
+        <div className="max-w-5xl mx-auto space-y-10 md:space-y-14">
+
+          {/* ── Hero ── */}
+          <div className="sp-hero-card rounded-2xl p-8 md:p-10 text-center space-y-5">
+            <div style={{ animation: "sp-float 4s ease-in-out infinite" }} className="text-5xl md:text-6xl">💎</div>
+            <div className="space-y-2">
+              <p className="text-purple-300/70 text-xs font-bold uppercase tracking-widest">Scotty Pumpkin Eco Market System</p>
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-black sp-shimmer-heading">
+                Eco Financial System
+              </h1>
+              <p className="text-white/50 text-sm md:text-base max-w-lg mx-auto leading-relaxed pt-1">
+                Financial Allocation &amp; Token Market Clarification Notice
+              </p>
+            </div>
+            <div className="flex flex-wrap items-center justify-center gap-3 pt-1">
+              <span className="sp-badge-amber  text-xs font-semibold px-3 py-1 rounded-full">Utility Token Only</span>
+              <span className="sp-badge-indigo text-xs font-semibold px-3 py-1 rounded-full">SPL · Solana</span>
+              <span className="sp-badge-green  text-xs font-semibold px-3 py-1 rounded-full">60/10/10/10/10 Model</span>
+              <span className="sp-badge-red    text-xs font-semibold px-3 py-1 rounded-full">Non-Investment</span>
+            </div>
+          </div>
+
+          {/* ── Red Disclaimer Banner ── */}
+          <div className="sp-disclaimer rounded-2xl px-6 py-4 flex items-start gap-4">
+            <span className="text-2xl flex-shrink-0 mt-0.5">⚠️</span>
+            <p className="text-red-200/80 text-sm md:text-base leading-relaxed">
+              All proceeds generated from first sales and administrative transaction fees remain the{" "}
+              <span className="font-bold text-red-300">exclusive property</span> of the Scotty Pumpkin operating
+              infrastructure and its holding company,{" "}
+              <span className="font-bold text-white">SAS Association Familiale Fin (Affin)</span>.
+              These allocations do not constitute a financial product, investment, or guarantee of any kind.
+            </p>
+          </div>
+
+          <div className="sp-divider" />
+
+          {/* ── Allocation Model ── */}
+          <div className="space-y-5">
+            <div className="flex items-center gap-3">
+              <span className="text-2xl">📊</span>
+              <h2 className="text-2xl md:text-3xl font-black text-white">Ecosystem Allocation Model</h2>
+            </div>
+
+            <div className="sp-alloc-card rounded-2xl p-6 md:p-8">
+              <div className="flex flex-col md:flex-row gap-8 items-center md:items-start">
+
+                {/* SVG Donut chart */}
+                <div className="sp-ring-wrap flex-shrink-0">
+                  <svg viewBox="0 0 160 160" className="w-full h-full -rotate-90">
+                    {(() => {
+                      let offset = 0;
+                      const r = 58;
+                      const circ = 2 * Math.PI * r;
+                      return ALLOCATION.map((a, i) => {
+                        const dash = (a.pct / 100) * circ;
+                        const gap = circ - dash;
+                        const el = (
+                          <circle
+                            key={i}
+                            cx="80" cy="80" r={r}
+                            fill="none"
+                            stroke={a.color}
+                            strokeWidth="18"
+                            strokeDasharray={`${dash} ${gap}`}
+                            strokeDashoffset={-offset}
+                            style={{ filter: `drop-shadow(0 0 6px ${a.glow})` }}
+                          />
+                        );
+                        offset += dash;
+                        return el;
+                      });
+                    })()}
+                  </svg>
+                  <div className="sp-ring-center">
+                    <p className="text-white font-black text-xl leading-none">SPUMP</p>
+                    <p className="text-white/40 text-xs mt-1">Allocation</p>
+                  </div>
+                </div>
+
+                {/* Bars */}
+                <div className="flex-1 w-full space-y-4">
+                  {ALLOCATION.map((row, i) => (
+                    <div key={i} className="space-y-1.5">
+                      <div className="flex justify-between items-center">
+                        <span className="text-white/70 text-sm">{row.label}</span>
+                        <span className="font-black text-sm" style={{ color: row.color }}>{row.value}</span>
+                      </div>
+                      <div className="sp-bar-track">
+                        <div
+                          className="sp-bar-fill"
+                          style={{
+                            "--bar-w": row.value,
+                            width: row.value,
+                            background: row.color,
+                            boxShadow: `0 0 8px ${row.glow}`,
+                            animationDelay: `${i * 0.1}s`,
+                          }}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* ── No Rights ── */}
+          <div className="space-y-4">
+            <div className="flex items-center gap-3">
+              <span className="text-2xl">🚫</span>
+              <h2 className="text-2xl md:text-3xl font-black text-white">These Allocations…</h2>
+            </div>
+            <div className="sp-no-rights-card rounded-2xl p-5 md:p-6 space-y-3">
+              {NO_RIGHTS.map((item, i) => (
+                <div key={i} className="sp-no-rights-item">
+                  <span className="text-red-400 text-lg flex-shrink-0" style={{ filter: "drop-shadow(0 0 4px rgba(248,113,113,0.5))" }}>✕</span>
+                  <span className="text-red-200/80 text-sm md:text-base">{item}</span>
+                </div>
+              ))}
+              <div className="pt-2 border-t border-red-500/10">
+                <p className="text-white/40 text-xs italic">
+                  The ecosystem allocation model is an internal sustainability structure only and has no direct influence on the market value of SPUMP.
+                </p>
+              </div>
+            </div>
+
+            {/* SPUMP utility callout */}
+            <div className="rounded-2xl px-6 py-5 flex items-center gap-4" style={{ background: "rgba(168,85,247,0.08)", border: "1px solid rgba(168,85,247,0.25)", boxShadow: "0 0 40px rgba(168,85,247,0.08)" }}>
+              <span className="text-3xl flex-shrink-0" style={{ animation: "sp-glow-pulse 3s ease-in-out infinite" }}>🎃</span>
+              <p className="text-purple-200 text-sm md:text-base leading-relaxed">
+                <span className="font-black text-white">SPUMP</span> is a utility payment token used exclusively within the{" "}
+                <span className="font-bold text-white">Scotty Pumpkin Eco Market System</span>.
+              </p>
+            </div>
+          </div>
+
+          <div className="sp-divider" />
+
+          {/* ── Market Structure ── */}
+          <div className="space-y-5">
+            <div className="flex items-center gap-3">
+              <span className="text-2xl">📈</span>
+              <h2 className="text-2xl md:text-3xl font-black text-white">Market Structure Clarification</h2>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-5">
+              {MARKET_CARDS.map((card) => (
+                <div
+                  key={card.id}
+                  className="sp-market-card"
+                  style={{
+                    background: card.bg,
+                    border: `1px solid ${card.border}`,
+                    boxShadow: `0 8px 32px rgba(0,0,0,0.3), 0 0 40px ${card.glow}`,
+                  }}
+                >
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="text-3xl">{card.icon}</span>
+                    <div>
+                      <p className="text-xs font-bold uppercase tracking-widest" style={{ color: card.accent }}>{card.label}</p>
+                      <h3 className="text-lg font-black text-white">{card.title}</h3>
+                    </div>
+                  </div>
+
+                  <p className="text-white/75 text-sm md:text-base leading-relaxed mb-4">{card.body}</p>
+
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {card.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="sp-tag"
+                        style={{ background: `${card.accent}18`, border: `1px solid ${card.accent}40`, color: card.accent }}
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  <div className="rounded-xl px-4 py-3 text-xs" style={{ background: "rgba(239,68,68,0.06)", border: "1px solid rgba(239,68,68,0.15)" }}>
+                    <span className="text-red-300/80">{card.note}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="sp-divider" />
+
+          {/* ── Final Notice ── */}
+          <div className="sp-notice rounded-2xl p-6 md:p-8 text-center space-y-3">
+            <span className="text-2xl">📋</span>
+            <p className="text-white/60 text-sm md:text-base leading-relaxed max-w-2xl mx-auto">
+              No guarantee of value, appreciation, stability, hedge protection, or financial return is provided.
+              SPUMP market price is determined solely by open market activity.
+            </p>
+            <div className="sp-divider" />
+            <p className="text-white/30 text-xs">
+              Scotty Pumpkin Ltd · SAS Association Familiale Fin (Affin) · legal@scottypumpkin.com
+            </p>
+          </div>
+
+        </div>
+      </section>
+    </>
+  );
+}

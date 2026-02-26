@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 
-export default function NotFound() {
+export default function MaintenancePage() {
   return (
     <>
       <style>{`
@@ -10,31 +10,13 @@ export default function NotFound() {
           0%, 100% { transform: translateY(0px) rotate(-3deg); }
           50%       { transform: translateY(-18px) rotate(3deg); }
         }
-        @keyframes sp-float-slow {
-          0%, 100% { transform: translateY(0px); }
-          50%       { transform: translateY(-10px); }
-        }
         @keyframes sp-shimmer {
           0%   { background-position: -200% center; }
           100% { background-position:  200% center; }
         }
         @keyframes sp-glow-pulse {
-          0%, 100% { opacity: 0.4; text-shadow: 0 0 40px rgba(245,158,11,0.4), 0 0 80px rgba(245,158,11,0.2); }
+          0%, 100% { opacity: 0.5; text-shadow: 0 0 40px rgba(245,158,11,0.4), 0 0 80px rgba(245,158,11,0.2); }
           50%       { opacity: 1;   text-shadow: 0 0 60px rgba(245,158,11,0.9), 0 0 120px rgba(245,158,11,0.5), 0 0 200px rgba(245,158,11,0.2); }
-        }
-        @keyframes sp-glitch {
-          0%   { clip-path: inset(0 0 95% 0); transform: translate(-4px, 0); }
-          5%   { clip-path: inset(30% 0 50% 0); transform: translate(4px, 0); }
-          10%  { clip-path: inset(60% 0 20% 0); transform: translate(-2px, 0); }
-          15%  { clip-path: inset(80% 0 5% 0);  transform: translate(3px, 0); }
-          20%, 100% { clip-path: inset(0 0 100% 0); transform: translate(0); }
-        }
-        @keyframes sp-glitch2 {
-          0%   { clip-path: inset(50% 0 30% 0); transform: translate(4px, 0); color: #a78bfa; }
-          5%   { clip-path: inset(10% 0 70% 0); transform: translate(-4px, 0); color: #4ade80; }
-          10%  { clip-path: inset(70% 0 10% 0); transform: translate(2px, 0); color: #f59e0b; }
-          15%  { clip-path: inset(20% 0 60% 0); transform: translate(-2px, 0); }
-          20%, 100% { clip-path: inset(0 0 100% 0); transform: translate(0); }
         }
         @keyframes sp-star-twinkle {
           0%, 100% { opacity: 0.2; transform: scale(1); }
@@ -56,43 +38,19 @@ export default function NotFound() {
           from { transform: rotate(0deg) translateX(75px) rotate(0deg); }
           to   { transform: rotate(-360deg) translateX(75px) rotate(360deg); }
         }
-
-        .nf-404 {
-          font-size: clamp(7rem, 22vw, 14rem);
-          font-weight: 900;
-          line-height: 1;
-          letter-spacing: -0.04em;
-          color: rgba(245,158,11,0.15);
-          position: relative;
-          user-select: none;
+        @keyframes sp-progress {
+          0%   { width: 0%; }
+          60%  { width: 72%; }
+          80%  { width: 78%; }
+          100% { width: 82%; }
         }
-        .nf-404-main {
-          position: absolute;
-          inset: 0;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: #f59e0b;
-          animation: sp-glow-pulse 3s ease-in-out infinite;
+        @keyframes sp-blink {
+          0%, 100% { opacity: 1; }
+          50%       { opacity: 0; }
         }
-        .nf-404-glitch1 {
-          position: absolute;
-          inset: 0;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: #a78bfa;
-          animation: sp-glitch 4s steps(1) infinite;
-          pointer-events: none;
-        }
-        .nf-404-glitch2 {
-          position: absolute;
-          inset: 0;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          animation: sp-glitch2 4s steps(1) 0.3s infinite;
-          pointer-events: none;
+        @keyframes sp-wrench {
+          0%, 100% { transform: rotate(-15deg); }
+          50%       { transform: rotate(15deg); }
         }
 
         .nf-shimmer {
@@ -109,26 +67,6 @@ export default function NotFound() {
           animation: sp-shimmer 5s linear infinite;
         }
 
-        .nf-home-btn {
-          background: linear-gradient(135deg, #15803d, #166534);
-          box-shadow: 0 4px 24px rgba(21,128,61,0.45);
-          transition: all 0.25s ease;
-        }
-        .nf-home-btn:hover {
-          background: linear-gradient(135deg, #16a34a, #15803d);
-          transform: scale(1.05);
-          box-shadow: 0 6px 36px rgba(21,128,61,0.65);
-        }
-        .nf-back-btn {
-          border: 2px solid rgba(168,85,247,0.55);
-          transition: all 0.25s ease;
-        }
-        .nf-back-btn:hover {
-          background: rgba(168,85,247,0.15);
-          border-color: rgba(168,85,247,0.9);
-          transform: scale(1.05);
-        }
-
         .nf-divider {
           height: 1px;
           background: linear-gradient(to right, transparent, rgba(255,255,255,0.08) 20%, rgba(168,85,247,0.25) 50%, rgba(255,255,255,0.08) 80%, transparent);
@@ -142,8 +80,54 @@ export default function NotFound() {
           box-shadow: 0 8px 32px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.05);
         }
 
-        /* Stars */
+        .nf-progress-track {
+          background: rgba(255,255,255,0.06);
+          border-radius: 999px;
+          overflow: hidden;
+          height: 8px;
+          width: 100%;
+        }
+        .nf-progress-fill {
+          height: 100%;
+          border-radius: 999px;
+          background: linear-gradient(90deg, #f59e0b, #a78bfa);
+          box-shadow: 0 0 12px rgba(245,158,11,0.5);
+          animation: sp-progress 3s ease forwards;
+        }
+
+        .nf-status-dot {
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          background: #f59e0b;
+          box-shadow: 0 0 8px rgba(245,158,11,0.8);
+          animation: sp-blink 1.5s ease-in-out infinite;
+          flex-shrink: 0;
+        }
+
+        .nf-notify-btn {
+          background: linear-gradient(135deg, #15803d, #166534);
+          box-shadow: 0 4px 24px rgba(21,128,61,0.45);
+          transition: all 0.25s ease;
+        }
+        .nf-notify-btn:hover {
+          background: linear-gradient(135deg, #16a34a, #15803d);
+          transform: scale(1.05);
+          box-shadow: 0 6px 36px rgba(21,128,61,0.65);
+        }
+        .nf-social-btn {
+          border: 2px solid rgba(168,85,247,0.55);
+          transition: all 0.25s ease;
+        }
+        .nf-social-btn:hover {
+          background: rgba(168,85,247,0.15);
+          border-color: rgba(168,85,247,0.9);
+          transform: scale(1.05);
+        }
+
         .nf-star { position: absolute; border-radius: 50%; background: white; }
+
+        .sp-wrench { display: inline-block; animation: sp-wrench 1.2s ease-in-out infinite; transform-origin: bottom center; }
       `}</style>
 
       <div className="relative min-h-screen flex flex-col items-center justify-center px-4 overflow-hidden">
@@ -190,13 +174,8 @@ export default function NotFound() {
             className="relative flex items-center justify-center"
             style={{ width: 240, height: 240, animation: "sp-fade-up 0.6s ease both" }}
           >
-            {/* Orbit ring */}
             <div className="absolute inset-0 rounded-full pointer-events-none"
-              style={{
-                border: "1px dashed rgba(245,158,11,0.2)",
-                animation: "sp-spin-slow 20s linear infinite",
-              }}
-            />
+              style={{ border: "1px dashed rgba(245,158,11,0.2)", animation: "sp-spin-slow 20s linear infinite" }} />
             <div className="absolute rounded-full pointer-events-none"
               style={{
                 width: 150, height: 150,
@@ -204,20 +183,19 @@ export default function NotFound() {
                 marginTop: -75, marginLeft: -75,
                 border: "1px dashed rgba(168,85,247,0.15)",
                 animation: "sp-spin-slow 14s linear infinite reverse",
-              }}
-            />
+              }} />
 
-            {/* Orbiting ghost */}
+            {/* Orbiting wrench */}
             <div className="absolute" style={{ top: "50%", left: "50%", marginTop: -12, marginLeft: -12 }}>
               <div style={{ animation: "sp-orbit 8s linear infinite" }}>
-                <span style={{ fontSize: 22 }}>👻</span>
+                <span style={{ fontSize: 22 }}>🔧</span>
               </div>
             </div>
 
-            {/* Orbiting star */}
+            {/* Orbiting gear */}
             <div className="absolute" style={{ top: "50%", left: "50%", marginTop: -10, marginLeft: -10 }}>
               <div style={{ animation: "sp-orbit-rev 5s linear infinite" }}>
-                <span style={{ fontSize: 16 }}>⭐</span>
+                <span style={{ fontSize: 16 }}>⚙️</span>
               </div>
             </div>
 
@@ -227,63 +205,92 @@ export default function NotFound() {
             </div>
           </div>
 
-          {/* 404 glitch number */}
-          <div style={{ animation: "sp-fade-up 0.7s ease 0.1s both" }}>
-            <div className="nf-404 select-none" style={{ width: "100%", position: "relative", display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <span style={{
-                fontSize: "clamp(7rem, 22vw, 14rem)",
-                fontWeight: 900,
-                letterSpacing: "-0.04em",
-                lineHeight: 1,
-                color: "rgba(245,158,11,0.12)",
-                WebkitTextStroke: "2px rgba(245,158,11,0.15)",
-              }}>404</span>
-              <span className="nf-404-main" style={{ fontSize: "clamp(7rem, 22vw, 14rem)", fontWeight: 900, letterSpacing: "-0.04em", lineHeight: 1 }}>404</span>
-              <span className="nf-404-glitch1" style={{ fontSize: "clamp(7rem, 22vw, 14rem)", fontWeight: 900, letterSpacing: "-0.04em", lineHeight: 1 }}>404</span>
-              <span className="nf-404-glitch2" style={{ fontSize: "clamp(7rem, 22vw, 14rem)", fontWeight: 900, letterSpacing: "-0.04em", lineHeight: 1 }}>404</span>
+          {/* Heading */}
+          <div className="space-y-3" style={{ animation: "sp-fade-up 0.7s ease 0.15s both" }}>
+            <div className="flex items-center justify-center gap-3">
+              <span className="sp-wrench text-2xl">🔧</span>
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-black nf-shimmer">
+                Under Maintenance
+              </h1>
+              <span className="sp-wrench text-2xl" style={{ animationDelay: "0.6s" }}>🔧</span>
             </div>
+            <p className="text-white/55 text-base md:text-lg leading-relaxed max-w-md mx-auto">
+              Scotty is busy brewing something magical. We&apos;re sprucing up the pumpkin patch —
+              check back very soon!
+            </p>
           </div>
 
-          {/* Text */}
-          <div className="space-y-3" style={{ animation: "sp-fade-up 0.7s ease 0.2s both" }}>
-            <h1 className="text-2xl sm:text-3xl font-black nf-shimmer">
-              This page got spooked away!
-            </h1>
-            <p className="text-white/55 text-base md:text-lg leading-relaxed max-w-md mx-auto">
-              Looks like Scotty went trick-or-treating on a page that doesn&apos;t exist.
-              Let&apos;s get you back to the pumpkin patch.
-            </p>
+          {/* Status badge */}
+          <div style={{ animation: "sp-fade-up 0.7s ease 0.25s both" }}>
+            <div className="inline-flex items-center gap-2 rounded-full px-4 py-2"
+              style={{ background: "rgba(245,158,11,0.1)", border: "1px solid rgba(245,158,11,0.3)" }}>
+              <div className="nf-status-dot" />
+              <span className="text-amber-300 text-xs font-bold uppercase tracking-widest">
+                Live Very Soon
+              </span>
+            </div>
           </div>
 
           <div className="nf-divider w-full" style={{ animation: "sp-fade-up 0.7s ease 0.3s both" }} />
 
-          {/* Info card */}
-          <div className="nf-card rounded-2xl px-6 py-5 w-full" style={{ animation: "sp-fade-up 0.7s ease 0.35s both" }}>
-            <div className="flex items-start gap-4 text-left">
-              <span className="text-2xl flex-shrink-0 mt-0.5">🔍</span>
-              <div>
-                <p className="text-white/80 text-sm font-semibold mb-1">Why am I here?</p>
-                <p className="text-white/45 text-sm leading-relaxed">
-                  The page may have been moved, deleted, or the link might be incorrect.
-                  Try heading back home or visiting the marketplace.
-                </p>
-              </div>
+          {/* Progress bar */}
+          <div className="w-full space-y-3" style={{ animation: "sp-fade-up 0.7s ease 0.35s both" }}>
+            <div className="flex justify-between items-center">
+              <span className="text-white/40 text-xs font-semibold uppercase tracking-wider">Launch Progress</span>
+              <span className="text-amber-400 text-xs font-black">Almost there...</span>
+            </div>
+            <div className="nf-progress-track">
+              <div className="nf-progress-fill" />
             </div>
           </div>
 
-          {/* Buttons */}
-          <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto" style={{ animation: "sp-fade-up 0.7s ease 0.45s both" }}>
-            <Link href="/" className="nf-home-btn px-8 py-3.5 rounded-xl font-bold text-base text-white text-center">
-              🏠 Back to Home
-            </Link>
-            <Link href="/marketplace" className="nf-back-btn px-8 py-3.5 rounded-xl font-semibold text-base text-white text-center">
-              🛒 Visit Marketplace
-            </Link>
+          {/* Info cards */}
+          <div className="grid sm:grid-cols-3 gap-3 w-full" style={{ animation: "sp-fade-up 0.7s ease 0.4s both" }}>
+            {[
+              { icon: "🛒", label: "Marketplace", status: "Coming Soon" },
+              { icon: "💎", label: "SPUMP Token", status: "Ready" },
+              { icon: "🌐", label: "Web3 Payments", status: "In Progress" },
+            ].map((item) => (
+              <div key={item.label} className="nf-card rounded-xl px-4 py-4 text-center space-y-1.5">
+                <span className="text-2xl">{item.icon}</span>
+                <p className="text-white/70 text-xs font-bold">{item.label}</p>
+                <span
+                  className="text-xs font-semibold px-2 py-0.5 rounded-full inline-block"
+                  style={
+                    item.status === "Ready"
+                      ? { background: "rgba(74,222,128,0.1)", border: "1px solid rgba(74,222,128,0.3)", color: "#4ade80" }
+                      : item.status === "In Progress"
+                      ? { background: "rgba(99,102,241,0.12)", border: "1px solid rgba(99,102,241,0.3)", color: "#a5b4fc" }
+                      : { background: "rgba(245,158,11,0.12)", border: "1px solid rgba(245,158,11,0.3)", color: "#fbbf24" }
+                  }
+                >
+                  {item.status}
+                </span>
+              </div>
+            ))}
           </div>
 
-          {/* Footer hint */}
-          <p className="text-white/25 text-xs pb-4" style={{ animation: "sp-fade-up 0.7s ease 0.55s both" }}>
-            Error 404 — Page not found on the Scotty Pumpkin platform
+          {/* Buttons */}
+          <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto" style={{ animation: "sp-fade-up 0.7s ease 0.5s both" }}>
+            <a
+              href="mailto:support@scottypumpkin.com"
+              className="nf-notify-btn px-8 py-3.5 rounded-xl font-bold text-base text-white text-center"
+            >
+              ✉️ Contact Us
+            </a>
+            <a
+              href="https://twitter.com/scottypumpkin"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="nf-social-btn px-8 py-3.5 rounded-xl font-semibold text-base text-white text-center"
+            >
+              🐦 Follow for Updates
+            </a>
+          </div>
+
+          {/* Footer */}
+          <p className="text-white/25 text-xs pb-4" style={{ animation: "sp-fade-up 0.7s ease 0.6s both" }}>
+            support@scottypumpkin.com · Scotty Pumpkin Eco Market System
           </p>
 
         </div>

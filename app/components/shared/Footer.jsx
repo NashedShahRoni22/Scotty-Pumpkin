@@ -1,19 +1,19 @@
 import React from 'react';
-import { Facebook, Twitter, Instagram, Youtube } from 'lucide-react';
+import { Twitter, Github, Paperclip } from 'lucide-react';
 
 export default function Footer() {
   const footerLinks = [
-    { label: 'About Scotty Pumpkin', href: '/about' },
-    { label: 'Marketplace', href: '/marketplace' },
-    { label: 'Create a Shop', href: '/create-shop' },
-    { label: 'Terms & Privacy', href: '/terms' }
+    { label: 'Privacy Policy', href: '/privacy-policy' },
+    { label: 'Compliance', href: '/compliance' },
+    { label: 'Legal Pack', href: '/legal-pack' },
+    { label: 'Regulatory Framework', href: '/regulatory-framework' },
+    { label: 'Eco Financial', href: '/eco-financial' },
   ];
 
   const socialLinks = [
-    { Icon: Facebook, href: '#facebook', label: 'Facebook' },
-    { Icon: Twitter, href: '#twitter', label: 'Twitter' },
-    { Icon: Instagram, href: '#instagram', label: 'Instagram' },
-    { Icon: Youtube, href: '#youtube', label: 'YouTube' }
+    { Icon: Github, href: 'https://github.com/spump-coin', label: 'GitHub' },
+    { Icon: Paperclip, href: 'https://github.com/SPUMP-COIN/white_paper', label: 'White Paper' },
+    { Icon: Twitter, href: 'https://x.com/SpumpCoin', label: 'Twitter' },
   ];
 
   return (
